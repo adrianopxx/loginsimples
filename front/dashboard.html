@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <p id="welcomeMessage"></p>
+  <button id="logoutButton">Logout</button>
+
+  <script>
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+      alert('Você precisa estar logado para acessar esta página.');
+      window.location.href = 'index.html'; // Redireciona para a página de login
+    } else {
+      fetch('http://localhost:3000/dashboard', {
+        method: 'GET',
+        headers: {
+          'Authorization': token  // Envia o token para o servidor
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('welcomeMessage').textContent = data.message;
+      })
+      .catch(error => {
+        alert('Erro ao carregar o dashboard');
+      });
+
+      // Função de logout
+      document.getElementById('logoutButton').addEventListener('click', () => {
+        localStorage.removeItem('authToken');
+        window.location.href = 'index.html';  // Redireciona para o login
+      });
+    }
+  </script>
+</body>
+</html>
