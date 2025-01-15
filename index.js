@@ -1,5 +1,4 @@
 import express from 'express';
-import { json } from 'body-parser';
 import cors from 'cors';
 import { readFileSync } from 'fs';
 
@@ -7,13 +6,13 @@ const app = express();
 const PORT = 3000;
 
 // Middleware para processar requisições JSON
-app.use(json());
+app.use(express.json()); // Usa o middleware JSON do Express
 
-// Habilita o CORS para qualquer origem (domínio)
+// Habilita o CORS para qualquer origem
 app.use(cors({
-  origin: '*', // Permite qualquer domínio
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Simula uma "tabela" de sessões na memória
