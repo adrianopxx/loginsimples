@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const fs = require('fs');
+import express from 'express';
+import { json } from 'body-parser';
+import cors from 'cors';
+import { readFileSync } from 'fs';
 
 const app = express();
 const PORT = 3000;
 
 // Middleware para processar requisições JSON
-app.use(bodyParser.json());
+app.use(json());
 
 // Habilita o CORS para qualquer origem (domínio)
 app.use(cors({
@@ -21,7 +21,7 @@ const activeSessions = {};
 
 // Função para carregar os usuários do arquivo JSON
 const loadUsers = () => {
-  const data = fs.readFileSync('users.json', 'utf8');
+  const data = readFileSync('users.json', 'utf8');
   return JSON.parse(data);
 };
 
